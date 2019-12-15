@@ -47,7 +47,7 @@ class MapGenerator:
                 latitude = org['coordinates']['latitude']
                 coordinate = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
                 orgs_coordinates.append(coordinate)
-                print(coordinate)
+                print((coordinate.x, coordinate.y))
 
             orgs_probability_result_list.append(self.database.get_data_by_category_deviation(
                 category, deviation_id, orgs_coordinates)
@@ -55,8 +55,8 @@ class MapGenerator:
 
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
 
-        plt.imshow(heatmap)
-        plt.show()
+        # plt.imshow(heatmap)
+        # plt.show()
 
         result = list()
         for longitude in np.linspace(Settings.top_left_coordinate.longitude,
@@ -65,7 +65,7 @@ class MapGenerator:
             for latitude in np.linspace(Settings.top_left_coordinate.latitude,
                                  Settings.bottom_right_coordinate.latitude,
                                  Settings.heatmap_shape[1]):
-                i, j = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
+                point = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
                 # print(heatmap[i, j], i, j)
-                result.append((longitude, latitude, np.power(heatmap[i, j], 0.3)))
+                result.append((longitude, latitude, np.power(heatmap[point.x, point.y], 0.3)))
         return result

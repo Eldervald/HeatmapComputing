@@ -40,4 +40,4 @@ class CoordinateSystem:
         i = int(np.clip(i, 0, self.width - 1))
         j = int(np.clip(j, 0, self.height - 1))
 
-        return i, j
+        return Point(i, j)

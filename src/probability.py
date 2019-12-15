@@ -1,12 +1,13 @@
 import numpy as np
 import scipy.ndimage.filters as filters
 import matplotlib.pyplot as plt
+from src.coordinate_system import Point
 
 
 # calculate 2-dimensional normal distribution with math. expectation at some point
-def two_d_normal_distribution(shape: tuple, point: tuple, sigma):
+def two_d_normal_distribution(shape: tuple, point: Point, sigma):
     plane = np.zeros(shape, dtype=float)
-    x, y = point
+    x, y = point.x, point.y
     plane[x, y] = 1
     return filters.gaussian_filter(plane, sigma)
 
