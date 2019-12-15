@@ -1,11 +1,23 @@
 import numpy as np
 
 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+class Coordinate:
+    def __init__(self, longitude, latitude):
+        self.latitude = latitude
+        self.longitude = longitude
+
+
 class CoordinateSystem:
-    def __init__(self, shape: tuple, top_left: tuple, bottom_right: tuple):
+    def __init__(self, shape: tuple, top_left: Coordinate, bottom_right: Coordinate):
         self.width, self.height = shape
-        x1, y1 = top_left
-        x2, y2 = bottom_right
+        x1, y1 = top_left.latitude, top_left.longitude
+        x2, y2 = bottom_right.latitude, bottom_right.longitude
 
         if x1 > x2:
             x1, x2 = x2, x1
@@ -29,9 +41,3 @@ class CoordinateSystem:
         j = int(np.clip(j, 0, self.height - 1))
 
         return i, j
-
-
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y

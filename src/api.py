@@ -55,17 +55,17 @@ class MapGenerator:
 
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
 
-        # plt.imshow(heatmap)
-        # plt.show()
+        plt.imshow(heatmap)
+        plt.show()
 
         result = list()
-        for x in np.linspace(Settings.top_left_coordinate[0],
-                             Settings.bottom_right_coordinate[0],
+        for longitude in np.linspace(Settings.top_left_coordinate.longitude,
+                             Settings.bottom_right_coordinate.longitude,
                              Settings.heatmap_shape[0]):
-            for y in np.linspace(Settings.top_left_coordinate[1],
-                                 Settings.bottom_right_coordinate[1],
+            for latitude in np.linspace(Settings.top_left_coordinate.latitude,
+                                 Settings.bottom_right_coordinate.latitude,
                                  Settings.heatmap_shape[1]):
-                i, j = self.coordinate_system.to_cartesian(longitude=x, latitude=y)
+                i, j = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
                 # print(heatmap[i, j], i, j)
-                result.append((x, y, np.power(heatmap[i, j], 0.3)))
+                result.append((longitude, latitude, np.power(heatmap[i, j], 0.3)))
         return result
