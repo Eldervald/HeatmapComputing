@@ -62,3 +62,5 @@ class MapGenerator:
 
         plt.imshow(heatmap)
         plt.show()
+
+        return heatmap

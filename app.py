@@ -12,6 +12,8 @@ def searcher_from_post():
 
     hots = map_generator.calculate_map(data)
 
+    return json.dumps([{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots])
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5002)
