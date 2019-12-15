@@ -21,8 +21,10 @@ class MapGenerator:
                                                   bottom_right=Settings.bottom_right_coordinate)
         self.database = Database()
 
-    def calculate_map(self, all_objects):
+    def calculate_map(self, data):
         orgs_probability_result_list = list()
+
+        all_objects = data["areaCoordinates"]["coordinatesImportance"]
 
         for categoryDict in all_objects:
             category = str(categoryDict['organizationType'])

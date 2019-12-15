@@ -4,8 +4,8 @@ import numpy as np
 class CoordinateSystem:
     def __init__(self, shape: tuple, top_left: tuple, bottom_right: tuple):
         self.width, self.height = shape
-        y1, x1 = top_left
-        y2, x2 = bottom_right
+        x1, y1 = top_left
+        x2, y2 = bottom_right
 
         if x1 > x2:
             x1, x2 = x2, x1

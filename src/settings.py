@@ -1,7 +1,7 @@
 class Settings:
     data_shape = (200, 200)
-    top_left_coordinate = (53.610826, 23.777779)
-    bottom_right_coordinate = (53.718562, 23.864186)
+    top_left_coordinate = (23.712759, 53.760859)
+    bottom_right_coordinate = (23.977118, 53.600244)
     heatmap_shape = (30, 30)
     standart_deviation = [25, 15, 5, 0]
     radius = 5
