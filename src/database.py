@@ -12,7 +12,7 @@ class Database:
 
     def get_data_by_category_deviation(self, category: str, deviation_id: int, objects):
         self.update_data_by_category_deviation(category, deviation_id, objects)
-        return Database.data[(category, deviation_id)]
+        return self.data[(category, deviation_id)]
 
     def update_data_by_category_deviation(self, category: str, deviation_id: int, objects):
         if (category, deviation_id) not in self.data:

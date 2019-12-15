@@ -24,7 +24,7 @@ class MapGenerator:
     def calculate_map(self, data):
         orgs_probability_result_list = list()
 
-        all_objects = data["areaCoordinates"]["coordinatesImportance"]
+        all_objects = data["coordinatesImportance"]
 
         for categoryDict in all_objects:
             category = str(categoryDict['organizationType'])
