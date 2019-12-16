@@ -61,12 +61,12 @@ def get_distribution_in_region(plane, radius):
 
 
 # Debug
-# org1 = intersect_distributions((200, 200), [(50, 50), (100, 150), (170, 60)], 30)
-# org2 = intersect_distributions((200, 200), [(100, 100)], 30)
+# org1 = intersect_distributions((200, 200), [Point(50, 50), Point(100, 150), Point(170, 60)], 30)
+# org2 = intersect_distributions((200, 200), [Point(100, 100)], 30)
 #
 # plt.imshow(get_distribution_in_points([org1, org2]))
 # plt.gca().invert_yaxis()
-# plt.imshow(two_d_normal_distribution((200, 200), (100, 100), 70))
+# plt.imshow(two_d_normal_distribution((200, 200), Point(100, 100), 20))
 # plt.show()
 #
 #

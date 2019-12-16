@@ -5,15 +5,8 @@ from src.coordinate_system import CoordinateSystem
 from src.probability import get_distribution_in_region, get_distribution_in_points
 from PIL import Image
 import numpy as np
+from scipy import interpolate
 
-
-# DATA_SHAPE = (200, 200)
-# TOP_LEFT_COORDINATE = (53.610826, 23.777779)
-# BOTTOM_RIGHT_COORDINATE = (53.718562, 23.864186)
-# HEATMAP_SHAPE = (30, 30)
-# STANDART_DEVIATION = [25, 15, 5, 0]
-# RADIUS = 5
-# IMG_PATH = "../BlackRealtors/BlackRealtors/wwwroot/images/final_map.png"
 
 class MapGenerator:
     def __init__(self):
@@ -35,7 +28,7 @@ class MapGenerator:
                 print('No organizations of type : ' + category)
                 continue
 
-            deviation_id = categoryDict['importanceLevel']
+            deviation_id = categoryDict['importanceLevel'] - 1
             if deviation_id == 0:
                 print('No defined importance level of type : ' + category)
                 continue
@@ -45,7 +38,7 @@ class MapGenerator:
             for org in detailed_orgs:
                 longitude = org['coordinates']['longitude']
                 latitude = org['coordinates']['latitude']
-                coordinate = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
+                coordinate = self.coordinate_system.to_cartesian_int(longitude=longitude, latitude=latitude)
                 orgs_coordinates.append(coordinate)
                 print((coordinate.x, coordinate.y))
 
@@ -54,18 +47,40 @@ class MapGenerator:
             )
 
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
-
+        print(heatmap)
+        plt.gca().invert_yaxis()
         # plt.imshow(heatmap)
         # plt.show()
+        plt.imshow(get_distribution_in_points(orgs_probability_result_list))
+        plt.show()
+        return self.interpolate_heatmap(heatmap)
+
+    def interpolate_heatmap(self, heatmap):
+
+        # xs = [i for i in range(Settings.data_shape[0])]
+        # ys = [i for i in range(Settings.data_shape[1])]
+        # f = interpolate.interp2d(xs, ys, heatmap)
+        #
+        # xnew = np.arange(Settings.top_left_coordinate.longitude,
+        #                              Settings.bottom_right_coordinate.longitude,
+        #                              Settings.heatmap_shape[0])
+        # ynew = np.arange(Settings.bottom_right_coordinate.latitude,
+        #                                 Settings.top_left_coordinate.latitude,
+        #                                 Settings.heatmap_shape[1])
+        # result = f(xnew, ynew)
 
         result = list()
+
         for longitude in np.linspace(Settings.top_left_coordinate.longitude,
-                             Settings.bottom_right_coordinate.longitude,
-                             Settings.heatmap_shape[0]):
-            for latitude in np.linspace(Settings.top_left_coordinate.latitude,
-                                 Settings.bottom_right_coordinate.latitude,
-                                 Settings.heatmap_shape[1]):
-                point = self.coordinate_system.to_cartesian(longitude=longitude, latitude=latitude)
-                # print(heatmap[i, j], i, j)
+                                     Settings.bottom_right_coordinate.longitude,
+                                     Settings.heatmap_shape[0]):
+            for latitude in np.linspace(Settings.bottom_right_coordinate.latitude,
+                                        Settings.top_left_coordinate.latitude,
+                                        Settings.heatmap_shape[1]):
+                point = self.coordinate_system.to_cartesian_int(longitude=longitude, latitude=latitude)
+                if heatmap[point.x, point.y] < 0.000001:
+                    continue
                 result.append((longitude, latitude, np.power(heatmap[point.x, point.y], 0.3)))
+
+        # print(result)
         return result

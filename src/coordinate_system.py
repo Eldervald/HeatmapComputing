@@ -16,8 +16,8 @@ class Coordinate:
 class CoordinateSystem:
     def __init__(self, shape: tuple, top_left: Coordinate, bottom_right: Coordinate):
         self.width, self.height = shape
-        x1, y1 = top_left.latitude, top_left.longitude
-        x2, y2 = bottom_right.latitude, bottom_right.longitude
+        y1, x1 = top_left.latitude, top_left.longitude
+        y2, x2 = bottom_right.latitude, bottom_right.longitude
 
         if x1 > x2:
             x1, x2 = x2, x1
@@ -30,14 +30,28 @@ class CoordinateSystem:
         self.x_scale = self.width / (x2 - x1)
         self.y_scale = self.height / (y2 - y1)
 
-    def to_cartesian(self, longitude: float, latitude: float):
-        dx = latitude - self.bottom_left.x
-        dy = longitude - self.bottom_left.y
+    def to_cartesian_int(self, longitude: float, latitude: float):
+        dx = longitude - self.bottom_left.x
+        dy = latitude - self.bottom_left.y
 
         i, j = np.round(dx * self.x_scale), np.round(dy * self.y_scale)
 
         # for points that out of bounds
         i = int(np.clip(i, 0, self.width - 1))
         j = int(np.clip(j, 0, self.height - 1))
+
+        return Point(i, j)
+
+    def to_cartesian_float(self, longitude: float, latitude: float):
+        dx = longitude - self.bottom_left.x
+        dy = latitude - self.bottom_left.y
+
+        i, j = dx * self.x_scale, dy * self.y_scale
+
+        if i > self.width:
+            i = self.width
+
+        if j > self.height:
+            j = self.height
 
         return Point(i, j)
