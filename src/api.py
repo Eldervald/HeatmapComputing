@@ -48,11 +48,12 @@ class MapGenerator:
 
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
         print(heatmap)
+
+        plt.imshow(heatmap)
         plt.gca().invert_yaxis()
-        # plt.imshow(heatmap)
-        # plt.show()
-        plt.imshow(get_distribution_in_points(orgs_probability_result_list))
         plt.show()
+        # plt.imshow(get_distribution_in_points(orgs_probability_result_list))
+        # plt.show()
         return self.interpolate_heatmap(heatmap)
 
     def interpolate_heatmap(self, heatmap):
@@ -81,5 +82,5 @@ class MapGenerator:
                     continue
                 result.append((longitude, latitude, np.power(heatmap[point.x, point.y], 0.3)))
 
-        # print(result)
+        print(result)
         return result
