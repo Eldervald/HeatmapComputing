@@ -70,7 +70,7 @@ class MapGenerator:
         img = img.convert('L')
         pixels = np.array(img)
 
-        map = np.zeros((pixels.shape[0], pixels.shape[1], 4), dtype=np.uint8)
+        map_image = np.zeros((pixels.shape[0], pixels.shape[1], 4), dtype=np.uint8)
 
         for row in range(0, pixels.shape[0]):
             for column in range(0, pixels.shape[1]):
@@ -92,9 +92,9 @@ class MapGenerator:
                 blur = 0
                 if intensity > 0:
                     blur = min(intensity * 10, 100)
-                map[row, column] = [red, green, 0, blur]
+                map_image[row, column] = [red, green, 0, blur]
 
-        res = Image.fromarray(map, mode="RGBA")
+        res = Image.fromarray(map_image, mode="RGBA")
 
         return res
         # return self.interpolate_heatmap(heatmap)
