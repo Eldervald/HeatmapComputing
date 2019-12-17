@@ -36,9 +36,15 @@ class CoordinateSystem:
 
         i, j = np.round(dx * self.x_scale), np.round(dy * self.y_scale)
 
+        if i < 0 or i >= self.width:
+            return None
+
+        if j < 0 or j >= self.height:
+            return None
+
         # for points that out of bounds
-        i = int(np.clip(i, 0, self.width - 1))
-        j = int(np.clip(j, 0, self.height - 1))
+        # i = int(np.clip(i, 0, self.width - 1))
+        # j = int(np.clip(j, 0, self.height - 1))
 
         return Point(i, j)
 
