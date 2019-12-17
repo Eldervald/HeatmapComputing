@@ -1,5 +1,6 @@
 from src.coordinate_system import Coordinate
 
+
 class Settings:
     data_shape = (200, 200)
     top_left_coordinate = Coordinate(longitude=23.712759, latitude=53.760859)

@@ -59,14 +59,13 @@ class MapGenerator:
 
         # xs = [i for i in range(Settings.data_shape[0])]
         # ys = [i for i in range(Settings.data_shape[1])]
-        # f = interpolate.interp2d(xs, ys, heatmap)
+        # f = interpolate.interp2d(xs, ys, heatmap, kind="cubic")
         #
-        # xnew = np.arange(Settings.top_left_coordinate.longitude,
-        #                              Settings.bottom_right_coordinate.longitude,
-        #                              Settings.heatmap_shape[0])
-        # ynew = np.arange(Settings.bottom_right_coordinate.latitude,
-        #                                 Settings.top_left_coordinate.latitude,
-        #                                 Settings.heatmap_shape[1])
+        # xnew = np.linspace(0, np.round(abs(Settings.bottom_right_coordinate.longitude - Settings.top_left_coordinate.longitude)),
+        #                    Settings.heatmap_shape[0])
+        # ynew = np.linspace(0, np.round(abs(Settings.bottom_right_coordinate.latitude - Settings.top_left_coordinate.latitude)),
+        #                    Settings.heatmap_shape[1])
+        # 
         # result = f(xnew, ynew)
 
         result = list()
