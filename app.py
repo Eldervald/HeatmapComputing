@@ -15,7 +15,7 @@ map_generator = MapGenerator()
 #     # print(json.dumps([{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots]))
 
 
-# @app.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def searcher_from_post():
     data = json.loads(request.data)
     # with open("static/data.json", "w", encoding="utf-8") as f:
