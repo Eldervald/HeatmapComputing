@@ -91,7 +91,7 @@ class MapGenerator:
 
                 blur = 0
                 if intensity > 0:
-                    blur = 100
+                    blur = min(intensity + 10, 100)
                 map[row, column] = [red, green, 0, blur]
 
         res = Image.fromarray(map, mode="RGBA")
