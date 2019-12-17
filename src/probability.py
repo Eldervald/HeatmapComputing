@@ -30,6 +30,8 @@ def intersect_distributions(shape: tuple, points, deviations):
 
 # calculate probability of how good is position
 def get_distribution_in_points(distributions):
+    if len(distributions) == 0:
+        return None
     fullone_plane = np.ones(distributions[0].shape, dtype=float)
     result = fullone_plane.copy()
     for d in distributions:
@@ -61,11 +63,12 @@ def get_distribution_in_region(plane, radius):
 
 
 # Debug
-# org1 = intersect_distributions((200, 200), [Point(50, 50), Point(100, 150), Point(170, 60)], 30)
-# org2 = intersect_distributions((200, 200), [Point(100, 100)], 30)
+# org1 = intersect_distributions((200, 200), [Point(102, 104)], 5)
+# org2 = intersect_distributions((200, 200), [Point(64, 81)], 5)
 #
 # plt.imshow(get_distribution_in_points([org1, org2]))
 # plt.gca().invert_yaxis()
+# plt.show()
 # plt.imshow(two_d_normal_distribution((200, 200), Point(100, 100), 20))
 # plt.show()
 #

@@ -29,7 +29,7 @@ class MapGenerator:
                 continue
 
             deviation_id = categoryDict['importanceLevel'] - 1
-            if deviation_id == 0:
+            if deviation_id < 0:
                 print('No defined importance level of type : ' + category)
                 continue
 
@@ -47,13 +47,16 @@ class MapGenerator:
             )
 
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
-        print(heatmap)
+        # print(heatmap)
 
         plt.imshow(heatmap)
         plt.gca().invert_yaxis()
         plt.show()
+
         # plt.imshow(get_distribution_in_points(orgs_probability_result_list))
+        # plt.gca().invert_yaxis()
         # plt.show()
+
         return self.interpolate_heatmap(heatmap)
 
     def interpolate_heatmap(self, heatmap):
