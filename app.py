@@ -27,8 +27,13 @@ def searcher_from_post():
     # with open("static/data.json", "w", encoding="utf-8") as f:
     #      json.dump(data, f)
     image = map_generator.calculate_map(data)
+    image.rotate(90)
 
-    return send_file(image)
+    image.save("res/map.png")
+    with open("res/map.png", mode="rb") as file:
+        res_bytes = base64.b64encode(file.read())
+        res_string = res_bytes.decode('utf-8')
+    return json.dumps({'heatmapImageBase64': res_string})
 
     # post = [{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots]
     # return json.dumps(post)
