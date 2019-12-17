@@ -20,7 +20,8 @@ def searcher_from_post():
     #     json.dump(data, f)
     hots = map_generator.calculate_map(data)
 
-    return json.dumps([{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots])
+    post = [{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots]
+    return json.dumps(post)
 
 
 if __name__ == '__main__':

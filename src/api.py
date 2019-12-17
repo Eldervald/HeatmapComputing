@@ -83,6 +83,10 @@ class MapGenerator:
                                         Settings.top_left_coordinate.latitude,
                                         Settings.heatmap_shape[1]):
                 point = self.coordinate_system.to_cartesian_int(longitude=longitude, latitude=latitude)
+
+                if point is None:
+                    continue
+
                 if heatmap[point.x, point.y] < 0.0001:
                     continue
                 result.append((longitude, latitude, np.power(heatmap[point.x, point.y], 0.3)))
