@@ -23,8 +23,8 @@ def searcher_from_post():
     #     json.dump(data, f)
     image = map_generator.calculate_map(data)
 
-    # image.save("res/map.png")
-    with image as file:
+    image.save("res/map.png")
+    with open("res/map.png", mode="rb") as file:
         res_string = base64.b64encode(file.read())
     return json.dumps({'heatmapImageBase64': res_string})
 
