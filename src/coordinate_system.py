@@ -34,14 +34,19 @@ class CoordinateSystem:
         dx = longitude - self.bottom_left.x
         dy = latitude - self.bottom_left.y
 
-        i, j = np.round(dx * self.x_scale), np.round(dy * self.y_scale)
+        i, j = int(np.round(dx * self.x_scale)), int(np.round(dy * self.y_scale))
 
-        if i < 0 or i >= self.width:
+        if i < 0 or i > self.width:
             return None
 
-        if j < 0 or j >= self.height:
+        if j < 0 or j > self.height:
             return None
 
+        if i == self.width:
+            i -= 1
+
+        if j == self.height:
+            j -= 1
         # for points that out of bounds
         # i = int(np.clip(i, 0, self.width - 1))
         # j = int(np.clip(j, 0, self.height - 1))
