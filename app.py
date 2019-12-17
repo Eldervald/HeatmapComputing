@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file
 from src.api import MapGenerator
 import json
+import base64
 from PIL import Image
 
 app = Flask(__name__)
@@ -21,7 +22,10 @@ def searcher_from_post():
     # with open("static/data.json", "w", encoding="utf-8") as f:
     #     json.dump(data, f)
     image = map_generator.calculate_map(data)
-    return send_file(image, mimetype='image/png')
+
+    with open("res/map.png", "rb") as file:
+        res_string = base64.b64encode(file.read())
+    return send_file(res_string)
 
     # post = [{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots]
     # return json.dumps(post)
