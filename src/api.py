@@ -51,15 +51,53 @@ class MapGenerator:
         heatmap = get_distribution_in_region(get_distribution_in_points(orgs_probability_result_list), Settings.radius)
         # print(heatmap)
 
-        plt.imshow(heatmap)
-        plt.gca().invert_yaxis()
-        plt.show()
+        # plt.imshow(heatmap)
+        # plt.gca().invert_yaxis()
+        # plt.show()
 
         # plt.imshow(get_distribution_in_points(orgs_probability_result_list))
         # plt.gca().invert_yaxis()
         # plt.show()
 
-        return self.interpolate_heatmap(heatmap)
+        plt.axis('off')
+        plt.imshow(heatmap, cmap='Greys', interpolation='spline36')
+        plt.gca().invert_yaxis()
+        # plt.show()
+
+        plt.savefig('res/tmp.png', bbox_inches='tight', dpi=250, pad_inches=0)
+
+        img = Image.open('res/tmp.png')
+        img = img.convert('L')
+        pixels = np.array(img)
+
+        map = np.zeros((pixels.shape[0], pixels.shape[1], 4), dtype=np.uint8)
+
+        for row in range(0, pixels.shape[0]):
+            for column in range(0, pixels.shape[1]):
+                pixel = 255 - pixels[row][column]
+                intensity = pixel
+
+                red = 0
+                green = 0
+
+                if intensity < 255 // 3:
+                    green = min(255, 85 + intensity * 2)
+                elif intensity < 255 * 2 // 3:
+                    green = 255
+                    red = min(255, (intensity - 255 // 3) * 3)
+                else:
+                    red = 255
+                    green = max(0, 255 - (intensity - 255 * 2 // 3) * 2)
+
+                blur = 0
+                if intensity > 0:
+                    blur = 100
+                map[row, column] = [red, green, 0, blur]
+
+        res = Image.fromarray(map, mode="RGBA")
+
+        return res
+        # return self.interpolate_heatmap(heatmap)
 
     def interpolate_heatmap(self, heatmap):
 
