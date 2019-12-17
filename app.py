@@ -25,7 +25,7 @@ def searcher_from_post():
 
     with open("res/map.png", "rb") as file:
         res_string = base64.b64encode(file.read())
-    return send_file(res_string)
+    return json.dumps({'heatmapImageBase64': res_string})
 
     # post = [{'coordinates': {'longitude': x, 'latitude': y}, 'weight': hot} for x, y, hot in hots]
     # return json.dumps(post)
